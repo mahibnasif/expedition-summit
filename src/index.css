@@ -1,1 +1,47 @@
 @import 'tailwindcss';
+
+@theme {
+  /* Expedition brand palette */
+  --color-navy-50: #f2f6fb;
+  --color-navy-100: #e0eaf5;
+  --color-navy-200: #c2d5ea;
+  --color-navy-300: #94b6d8;
+  --color-navy-400: #6092c1;
+  --color-navy-500: #3d73a8;
+  --color-navy-600: #2d5b8c;
+  --color-navy-700: #264a72;
+  --color-navy-800: #1e3a5a;
+  --color-navy-900: #0f2a43;
+  --color-navy-950: #0a1c2e;
+
+  --color-gold-50: #fdf9ec;
+  --color-gold-100: #faf0cd;
+  --color-gold-200: #f5e09b;
+  --color-gold-300: #f0cd66;
+  --color-gold-400: #f4b942;
+  --color-gold-500: #e69f1e;
+  --color-gold-600: #cb7d15;
+  --color-gold-700: #a95c15;
+  --color-gold-800: #8a4817;
+  --color-gold-900: #723c17;
+
+  --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-white font-body text-slate-700 antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display text-navy-900;
+  }
+}
