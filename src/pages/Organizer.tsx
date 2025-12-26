@@ -1,4 +1,4 @@
-import { useMemo, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import PageHeader from '../components/ui/PageHeader'
 import Container from '../components/ui/Container'
 import Card from '../components/ui/Card'
@@ -54,13 +54,12 @@ function exportCsv(rows: ReturnType<typeof getRegistrations>) {
 
 export default function Organizer() {
   const [filter, setFilter] = useState<Role | 'all'>('all')
-  const [refresh, setRefresh] = useState(0)
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
   const [published, setPublished] = useState(false)
 
-  const registrations = useMemo(() => getRegistrations(), [refresh])
-  const announcements = useMemo(() => getAnnouncements(), [refresh])
+  const [registrations] = useState(getRegistrations)
+  const [announcements, setAnnouncements] = useState(getAnnouncements)
 
   const visible =
     filter === 'all' ? registrations : registrations.filter((r) => r.role === filter)
@@ -77,7 +76,7 @@ export default function Organizer() {
     setTitle('')
     setBody('')
     setPublished(true)
-    setRefresh((n) => n + 1)
+    setAnnouncements(getAnnouncements())
   }
 
   return (
