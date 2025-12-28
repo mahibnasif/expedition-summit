@@ -7,6 +7,7 @@ import Container from '../components/ui/Container'
 import Card from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { event } from '../data/event'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Please enter your name'),
@@ -21,6 +22,7 @@ const inputClass =
   'mt-1 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-navy-500 focus:ring-2 focus:ring-navy-200 focus:outline-none'
 
 export default function Contact() {
+  usePageTitle('Contact')
   const [sent, setSent] = useState(false)
   const {
     register,

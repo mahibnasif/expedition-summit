@@ -10,6 +10,7 @@ import { Button } from '../components/ui/Button'
 import { TextField, SelectField, TextareaField, CheckboxField } from '../components/forms/fields'
 import { committees } from '../data/committees'
 import { saveRegistration, type RegistrationRecord, type Role } from '../lib/storage'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const roles: { value: Role; title: string; description: string }[] = [
   { value: 'delegate', title: 'MUN Delegate', description: 'Debate in one of six committees across the weekend.' },
@@ -102,6 +103,7 @@ const availabilityOptions = [
 ]
 
 export default function Register() {
+  usePageTitle('Register')
   const [step, setStep] = useState(0)
   const [confirmation, setConfirmation] = useState<RegistrationRecord | null>(null)
 

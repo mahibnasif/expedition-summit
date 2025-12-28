@@ -3,6 +3,7 @@ import PageHeader from '../components/ui/PageHeader'
 import Container from '../components/ui/Container'
 import SpeakerCard from '../components/SpeakerCard'
 import { speakers } from '../data/speakers'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 type Filter = 'all' | 'summit' | 'mun'
 
@@ -13,6 +14,7 @@ const filters: { value: Filter; label: string }[] = [
 ]
 
 export default function Speakers() {
+  usePageTitle('Speakers')
   const [filter, setFilter] = useState<Filter>('all')
   const visible = filter === 'all' ? speakers : speakers.filter((s) => s.track === filter)
 

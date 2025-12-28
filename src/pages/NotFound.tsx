@@ -1,7 +1,9 @@
 import Container from '../components/ui/Container'
 import { ButtonLink } from '../components/ui/Button'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function NotFound() {
+  usePageTitle('Page not found')
   return (
     <section className="py-24 sm:py-32">
       <Container className="text-center">

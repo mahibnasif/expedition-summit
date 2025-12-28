@@ -10,6 +10,7 @@ import {
   publishAnnouncement,
   type Role,
 } from '../lib/storage'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const roleLabels: Record<Role, string> = {
   delegate: 'Delegate',
@@ -53,6 +54,7 @@ function exportCsv(rows: ReturnType<typeof getRegistrations>) {
 }
 
 export default function Organizer() {
+  usePageTitle('Organizer Dashboard')
   const [filter, setFilter] = useState<Role | 'all'>('all')
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')

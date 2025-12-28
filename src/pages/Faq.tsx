@@ -2,8 +2,10 @@ import PageHeader from '../components/ui/PageHeader'
 import Container from '../components/ui/Container'
 import { ButtonLink } from '../components/ui/Button'
 import { faqs } from '../data/faqs'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 export default function Faq() {
+  usePageTitle('FAQ')
   return (
     <>
       <PageHeader

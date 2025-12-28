@@ -6,6 +6,7 @@ import Stat from '../components/ui/Stat'
 import SpeakerCard from '../components/SpeakerCard'
 import { event } from '../data/event'
 import { speakers } from '../data/speakers'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const highlights = [
   {
@@ -27,6 +28,7 @@ const highlights = [
 ]
 
 export default function Home() {
+  usePageTitle()
   const featured = speakers.slice(0, 4)
 
   return (

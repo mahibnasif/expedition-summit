@@ -4,6 +4,7 @@ import SectionHeading from '../components/ui/SectionHeading'
 import Card from '../components/ui/Card'
 import { ButtonLink } from '../components/ui/Button'
 import { event } from '../data/event'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const values = [
   {
@@ -21,6 +22,7 @@ const values = [
 ]
 
 export default function About() {
+  usePageTitle('About')
   return (
     <>
       <PageHeader

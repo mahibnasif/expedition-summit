@@ -3,6 +3,7 @@ import PageHeader from '../components/ui/PageHeader'
 import Container from '../components/ui/Container'
 import Badge from '../components/ui/Badge'
 import { schedule } from '../data/schedule'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 type TrackFilter = 'all' | 'summit' | 'mun'
 
@@ -13,6 +14,7 @@ const trackLabels: Record<'summit' | 'mun' | 'both', { label: string; tone: 'gol
 }
 
 export default function Schedule() {
+  usePageTitle('Schedule')
   const [day, setDay] = useState(schedule[0].id)
   const [track, setTrack] = useState<TrackFilter>('all')
 

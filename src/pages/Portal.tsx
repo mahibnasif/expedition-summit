@@ -7,6 +7,7 @@ import Badge from '../components/ui/Badge'
 import { Button, ButtonLink } from '../components/ui/Button'
 import { findRegistration, getAnnouncements, type RegistrationRecord } from '../lib/storage'
 import { event } from '../data/event'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const roleLabels = {
   delegate: 'MUN Delegate',
@@ -76,6 +77,7 @@ function LookupForm({ onFound }: { onFound: (r: RegistrationRecord) => void }) {
 }
 
 export default function Portal() {
+  usePageTitle('Participant Portal')
   const [registration, setRegistration] = useState<RegistrationRecord | null>(null)
   const announcements = getAnnouncements()
 

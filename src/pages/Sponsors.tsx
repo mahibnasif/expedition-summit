@@ -5,11 +5,13 @@ import Badge from '../components/ui/Badge'
 import { ButtonLink } from '../components/ui/Button'
 import { sponsors } from '../data/sponsors'
 import { event } from '../data/event'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const tiers = ['Platinum', 'Gold', 'Community'] as const
 const tierTone = { Platinum: 'gold', Gold: 'navy', Community: 'slate' } as const
 
 export default function Sponsors() {
+  usePageTitle('Sponsors')
   return (
     <>
       <PageHeader

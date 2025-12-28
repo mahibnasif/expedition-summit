@@ -6,6 +6,7 @@ import Badge from '../components/ui/Badge'
 import { ButtonLink } from '../components/ui/Button'
 import SpeakerCard from '../components/SpeakerCard'
 import { speakers } from '../data/speakers'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const sessions = [
   {
@@ -36,6 +37,7 @@ const sessions = [
 ]
 
 export default function Summit() {
+  usePageTitle('Business Summit')
   const summitSpeakers = speakers.filter((s) => s.track === 'summit')
 
   return (

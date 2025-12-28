@@ -6,6 +6,7 @@ import Card from '../components/ui/Card'
 import Badge from '../components/ui/Badge'
 import { ButtonLink } from '../components/ui/Button'
 import { committees } from '../data/committees'
+import { usePageTitle } from '../hooks/usePageTitle'
 
 const resources = [
   {
@@ -33,6 +34,7 @@ const levelTone = {
 } as const
 
 export default function Mun() {
+  usePageTitle('Model UN')
   return (
     <>
       <PageHeader
