@@ -4,6 +4,7 @@ export const event = {
   organization: 'Expedition',
   tagline: 'Two days of leadership, diplomacy, and innovation.',
   dates: 'March 13–14, 2027',
+  startsAt: new Date('2027-03-13T09:00:00-06:00'),
   venue: 'Grand Meridian Convention Center',
   city: 'Dallas, TX',
   email: 'hello@expedition.example',

@@ -7,6 +7,7 @@ import SpeakerCard from '../components/SpeakerCard'
 import { event } from '../data/event'
 import { speakers } from '../data/speakers'
 import { usePageTitle } from '../hooks/usePageTitle'
+import { useCountdown } from '../hooks/useCountdown'
 
 const highlights = [
   {
@@ -27,8 +28,22 @@ const highlights = [
   },
 ]
 
+function CountdownUnit({ value, label }: { value: number; label: string }) {
+  return (
+    <div className="rounded-xl bg-navy-800/60 px-4 py-3 text-center">
+      <p className="font-display text-3xl font-bold text-gold-400 tabular-nums">
+        {String(value).padStart(2, '0')}
+      </p>
+      <p className="mt-0.5 text-xs font-semibold tracking-widest text-navy-200 uppercase">
+        {label}
+      </p>
+    </div>
+  )
+}
+
 export default function Home() {
   usePageTitle()
+  const countdown = useCountdown(event.startsAt)
   const featured = speakers.slice(0, 4)
 
   return (
@@ -55,6 +70,19 @@ export default function Home() {
               View schedule
             </ButtonLink>
           </div>
+
+          {!countdown.isPast && (
+            <div
+              className="mt-10 inline-grid grid-cols-4 gap-3"
+              role="timer"
+              aria-label="Countdown to the event"
+            >
+              <CountdownUnit value={countdown.days} label="Days" />
+              <CountdownUnit value={countdown.hours} label="Hours" />
+              <CountdownUnit value={countdown.minutes} label="Min" />
+              <CountdownUnit value={countdown.seconds} label="Sec" />
+            </div>
+          )}
 
           <div className="mt-16 grid grid-cols-2 gap-8 border-t border-navy-700 pt-10 sm:grid-cols-4">
             <Stat value="2" label="Days" />
