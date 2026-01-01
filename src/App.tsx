@@ -17,6 +17,7 @@ const Contact = lazy(() => import('./pages/Contact'))
 const Register = lazy(() => import('./pages/Register'))
 const Portal = lazy(() => import('./pages/Portal'))
 const Organizer = lazy(() => import('./pages/Organizer'))
+const Team = lazy(() => import('./pages/Team'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const routes = [
@@ -33,6 +34,7 @@ const routes = [
   { path: '/register', element: <Register /> },
   { path: '/portal', element: <Portal /> },
   { path: '/organizer', element: <Organizer /> },
+  { path: '/team', element: <Team /> },
   { path: '*', element: <NotFound /> },
 ]
 
