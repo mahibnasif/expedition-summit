@@ -5,6 +5,7 @@ import Container from '../ui/Container'
 const secondaryLinks = [
   { to: '/committees', label: 'Committees' },
   { to: '/team', label: 'Team' },
+  { to: '/venue', label: 'Venue & Travel' },
   { to: '/sponsors', label: 'Sponsors' },
   { to: '/contact', label: 'Contact' },
   { to: '/portal', label: 'Participant Portal' },
