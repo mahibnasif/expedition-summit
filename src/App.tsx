@@ -19,6 +19,7 @@ const Portal = lazy(() => import('./pages/Portal'))
 const Organizer = lazy(() => import('./pages/Organizer'))
 const Team = lazy(() => import('./pages/Team'))
 const Venue = lazy(() => import('./pages/Venue'))
+const Gallery = lazy(() => import('./pages/Gallery'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const routes = [
@@ -37,6 +38,7 @@ const routes = [
   { path: '/organizer', element: <Organizer /> },
   { path: '/team', element: <Team /> },
   { path: '/venue', element: <Venue /> },
+  { path: '/gallery', element: <Gallery /> },
   { path: '*', element: <NotFound /> },
 ]
 

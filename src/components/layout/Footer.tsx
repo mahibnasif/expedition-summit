@@ -6,6 +6,7 @@ const secondaryLinks = [
   { to: '/committees', label: 'Committees' },
   { to: '/team', label: 'Team' },
   { to: '/venue', label: 'Venue & Travel' },
+  { to: '/gallery', label: 'Gallery' },
   { to: '/sponsors', label: 'Sponsors' },
   { to: '/contact', label: 'Contact' },
   { to: '/portal', label: 'Participant Portal' },
