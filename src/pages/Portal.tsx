@@ -5,7 +5,14 @@ import Container from '../components/ui/Container'
 import Card from '../components/ui/Card'
 import Badge from '../components/ui/Badge'
 import { Button, ButtonLink } from '../components/ui/Button'
-import { findRegistration, getAnnouncements, type RegistrationRecord } from '../lib/storage'
+import {
+  findRegistration,
+  getAnnouncements,
+  getPositionPaper,
+  submitPositionPaper,
+  type PositionPaper,
+  type RegistrationRecord,
+} from '../lib/storage'
 import { event } from '../data/event'
 import { usePageTitle } from '../hooks/usePageTitle'
 
@@ -23,6 +30,86 @@ const documents = [
   { name: 'Position paper template', detail: 'DOCX · required for award eligibility' },
   { name: 'Case competition brief', detail: 'PDF · released Saturday 11:00 AM' },
 ]
+
+function PositionPaperCard({ registration }: { registration: RegistrationRecord }) {
+  const [paper, setPaper] = useState<PositionPaper | undefined>(() =>
+    getPositionPaper(registration.id),
+  )
+  const [editing, setEditing] = useState(false)
+  const [content, setContent] = useState('')
+  const [error, setError] = useState('')
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault()
+    if (content.trim().length < 100) {
+      setError('Position papers should be at least a few paragraphs (100+ characters).')
+      return
+    }
+    const committee = registration.committeePreferences?.[0] ?? 'Unassigned'
+    setPaper(submitPositionPaper(registration.id, committee, content.trim()))
+    setEditing(false)
+    setError('')
+  }
+
+  return (
+    <Card>
+      <h3 className="font-display text-lg font-bold text-navy-900">Position paper</h3>
+      {paper && !editing ? (
+        <div className="mt-3">
+          <p className="flex items-center gap-2 text-sm text-slate-600">
+            <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden="true" />
+            Submitted{' '}
+            {new Date(paper.submittedAt).toLocaleDateString(undefined, {
+              month: 'long',
+              day: 'numeric',
+            })}{' '}
+            · {paper.committee}
+          </p>
+          <p className="mt-2 line-clamp-3 rounded-lg bg-navy-50 p-3 text-xs text-slate-500">
+            {paper.content}
+          </p>
+          <Button
+            variant="ghost"
+            className="mt-3"
+            onClick={() => {
+              setContent(paper.content)
+              setEditing(true)
+            }}
+          >
+            Replace submission
+          </Button>
+        </div>
+      ) : (
+        <form onSubmit={submit} className="mt-3">
+          <label htmlFor="paper" className="text-sm text-slate-600">
+            Paste your position paper text below. Due two weeks before the conference;
+            required for award eligibility.
+          </label>
+          <textarea
+            id="paper"
+            rows={6}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="mt-2 w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-navy-500 focus:ring-2 focus:ring-navy-200 focus:outline-none"
+          />
+          {error && (
+            <p className="mt-1 text-sm text-red-600" role="alert">
+              {error}
+            </p>
+          )}
+          <div className="mt-3 flex gap-2">
+            <Button type="submit">Submit paper</Button>
+            {editing && (
+              <Button type="button" variant="ghost" onClick={() => setEditing(false)}>
+                Cancel
+              </Button>
+            )}
+          </div>
+        </form>
+      )}
+    </Card>
+  )
+}
 
 function LookupForm({ onFound }: { onFound: (r: RegistrationRecord) => void }) {
   const [query, setQuery] = useState('')
@@ -163,6 +250,9 @@ export default function Portal() {
 
               {/* Announcements */}
               <div className="space-y-6">
+                {registration.role === 'delegate' && (
+                  <PositionPaperCard registration={registration} />
+                )}
                 <Card>
                   <h3 className="font-display text-lg font-bold text-navy-900">Announcements</h3>
                   {announcements.length === 0 ? (

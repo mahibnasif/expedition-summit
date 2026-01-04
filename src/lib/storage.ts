@@ -33,8 +33,16 @@ export interface Announcement {
   publishedAt: string
 }
 
+export interface PositionPaper {
+  registrationId: string
+  committee: string
+  content: string
+  submittedAt: string
+}
+
 const REGISTRATIONS_KEY = 'expedition.registrations'
 const ANNOUNCEMENTS_KEY = 'expedition.announcements'
+const PAPERS_KEY = 'expedition.positionPapers'
 
 function read<T>(key: string, fallback: T): T {
   try {
@@ -145,4 +153,29 @@ export function publishAnnouncement(title: string, body: string): Announcement {
   const stored = read<Announcement[]>(ANNOUNCEMENTS_KEY, [])
   write(ANNOUNCEMENTS_KEY, [...stored, announcement])
   return announcement
+}
+
+export function getPositionPaper(registrationId: string): PositionPaper | undefined {
+  return read<PositionPaper[]>(PAPERS_KEY, []).find(
+    (p) => p.registrationId === registrationId,
+  )
+}
+
+/** Saves or replaces the delegate's position paper. */
+export function submitPositionPaper(
+  registrationId: string,
+  committee: string,
+  content: string,
+): PositionPaper {
+  const paper: PositionPaper = {
+    registrationId,
+    committee,
+    content,
+    submittedAt: new Date().toISOString(),
+  }
+  const others = read<PositionPaper[]>(PAPERS_KEY, []).filter(
+    (p) => p.registrationId !== registrationId,
+  )
+  write(PAPERS_KEY, [...others, paper])
+  return paper
 }
