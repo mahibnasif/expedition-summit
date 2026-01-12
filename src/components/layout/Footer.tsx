@@ -19,8 +19,11 @@ export default function Footer() {
       <Container className="py-12">
         <div className="grid gap-10 md:grid-cols-3">
           <div>
-            <p className="font-display text-lg font-bold text-white">{event.organization}</p>
-            <p className="mt-2 max-w-xs text-sm">{event.tagline}</p>
+            <div className="flex items-center gap-3">
+              <img src="/logo.png" alt="" className="h-10 w-10 rounded-full" />
+              <p className="font-display text-lg font-bold text-white">{event.organization}</p>
+            </div>
+            <p className="mt-3 max-w-xs text-sm">{event.tagline}</p>
             <p className="mt-4 text-sm">
               {event.dates} · {event.venue}, {event.city}
             </p>

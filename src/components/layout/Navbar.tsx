@@ -5,11 +5,8 @@ import { ButtonLink } from '../ui/Button'
 
 function BrandMark() {
   return (
-    <Link to="/" className="flex items-center gap-2" aria-label="Expedition home">
-      <svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden="true">
-        <rect width="32" height="32" rx="7" fill="#0f2a43" />
-        <path d="M9 22 L16 8 L23 22 L16 18 Z" fill="#f4b942" />
-      </svg>
+    <Link to="/" className="flex items-center gap-2.5" aria-label="Expedition home">
+      <img src="/logo.png" alt="" className="h-9 w-9 rounded-full" />
       <span className="font-display text-lg font-bold text-navy-900">
         Expedition <span className="text-gold-600">2027</span>
       </span>
