@@ -1,23 +1,17 @@
 export const event = {
-  name: 'Expedition Business Summit & Model United Nations 2027',
-  shortName: 'Expedition Summit & MUN 2027',
-  organization: 'Expedition',
-  tagline: 'Two days of leadership, diplomacy, and innovation.',
-  dates: 'March 13–14, 2027',
-  startsAt: new Date('2027-03-13T09:00:00-06:00'),
-  venue: 'Grand Meridian Convention Center',
-  city: 'Dallas, TX',
+  name: 'Expedition Business Summit & Model United Nations',
+  shortName: 'Expedition Org.',
+  organization: 'Expedition Org.',
+  tagline: 'Leadership, diplomacy, and innovation — entirely student-run.',
+  /** Most recent season, already concluded. */
+  lastSeason: 'December 13, 2025 – January 16, 2026',
   email: 'hello@expedition.example',
   registrationOpen: true,
-  /** Demo build: all content is placeholder until Expedition provides official data. */
-  demoMode: true,
 }
 
 export const navLinks = [
   { to: '/about', label: 'About' },
-  { to: '/summit', label: 'Business Summit' },
-  { to: '/mun', label: 'Model UN' },
-  { to: '/speakers', label: 'Speakers' },
-  { to: '/schedule', label: 'Schedule' },
+  { to: '/events', label: 'Events' },
   { to: '/faq', label: 'FAQ' },
+  { to: '/contact', label: 'Contact' },
 ]

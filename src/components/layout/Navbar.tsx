@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { event, navLinks } from '../../data/event'
+import { navLinks } from '../../data/event'
 import { ButtonLink } from '../ui/Button'
 
 function BrandMark() {
@@ -8,7 +8,7 @@ function BrandMark() {
     <Link to="/" className="flex items-center gap-2.5" aria-label="Expedition home">
       <img src="/logo.png" alt="" className="h-9 w-9 rounded-full" />
       <span className="font-display text-lg font-bold text-navy-900">
-        Expedition <span className="text-gold-600">2027</span>
+        Expedition <span className="text-gold-600">Org.</span>
       </span>
     </Link>
   )
@@ -75,7 +75,7 @@ export default function Navbar() {
             ))}
             <div className="pt-2">
               <ButtonLink to="/register" className="w-full">
-                Register for {event.shortName}
+                Register
               </ButtonLink>
             </div>
           </div>

@@ -3,12 +3,7 @@ import { event, navLinks } from '../../data/event'
 import Container from '../ui/Container'
 
 const secondaryLinks = [
-  { to: '/committees', label: 'Committees' },
-  { to: '/team', label: 'Team' },
-  { to: '/venue', label: 'Venue & Travel' },
-  { to: '/gallery', label: 'Gallery' },
-  { to: '/sponsors', label: 'Sponsors' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/register', label: 'Register' },
   { to: '/portal', label: 'Participant Portal' },
   { to: '/organizer', label: 'Organizer Dashboard' },
 ]
@@ -25,12 +20,14 @@ export default function Footer() {
             </div>
             <p className="mt-3 max-w-xs text-sm">{event.tagline}</p>
             <p className="mt-4 text-sm">
-              {event.dates} · {event.venue}, {event.city}
+              <a href={`mailto:${event.email}`} className="hover:text-white">
+                {event.email}
+              </a>
             </p>
           </div>
 
-          <nav aria-label="Footer event pages">
-            <p className="mb-3 text-sm font-semibold tracking-widest text-gold-400 uppercase">Event</p>
+          <nav aria-label="Footer pages">
+            <p className="mb-3 text-sm font-semibold tracking-widest text-gold-400 uppercase">Explore</p>
             <ul className="space-y-2 text-sm">
               {navLinks.map((link) => (
                 <li key={link.to}>
@@ -43,7 +40,7 @@ export default function Footer() {
           </nav>
 
           <nav aria-label="Footer resources">
-            <p className="mb-3 text-sm font-semibold tracking-widest text-gold-400 uppercase">Resources</p>
+            <p className="mb-3 text-sm font-semibold tracking-widest text-gold-400 uppercase">Participate</p>
             <ul className="space-y-2 text-sm">
               {secondaryLinks.map((link) => (
                 <li key={link.to}>
@@ -57,10 +54,7 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 border-t border-navy-800 pt-6 text-xs text-navy-400">
-          <p>
-            © {new Date().getFullYear()} {event.organization}. Demo build — all content is
-            placeholder pending official review.
-          </p>
+          <p>© {new Date().getFullYear()} {event.organization} All rights reserved.</p>
         </div>
       </Container>
     </footer>
