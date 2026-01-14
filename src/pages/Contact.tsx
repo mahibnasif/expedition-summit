@@ -54,16 +54,8 @@ export default function Contact() {
                 <dd className="text-slate-600">{event.email}</dd>
               </div>
               <div>
-                <dt className="font-semibold text-navy-900">Venue</dt>
-                <dd className="text-slate-600">
-                  {event.venue}
-                  <br />
-                  {event.city}
-                </dd>
-              </div>
-              <div>
-                <dt className="font-semibold text-navy-900">Event dates</dt>
-                <dd className="text-slate-600">{event.dates}</dd>
+                <dt className="font-semibold text-navy-900">Most recent season</dt>
+                <dd className="text-slate-600">{event.lastSeason}</dd>
               </div>
             </dl>
           </div>

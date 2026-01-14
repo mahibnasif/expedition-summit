@@ -11,12 +11,12 @@ export default function NotFound() {
         <h1 className="mt-4 text-3xl font-bold">This session isn't on the agenda</h1>
         <p className="mx-auto mt-3 max-w-md text-slate-600">
           The page you're looking for doesn't exist or has moved. Head back to the
-          homepage or check the schedule.
+          homepage or check our events.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-4">
           <ButtonLink to="/">Back to home</ButtonLink>
-          <ButtonLink to="/schedule" variant="ghost">
-            View schedule
+          <ButtonLink to="/events" variant="ghost">
+            View events
           </ButtonLink>
         </div>
       </Container>

@@ -5,43 +5,28 @@ export interface FaqItem {
 
 export const faqs: FaqItem[] = [
   {
-    question: 'Who can attend?',
+    question: 'Who can participate?',
     answer:
-      'High school and university students are welcome in both tracks. Some advanced MUN committees recommend prior conference experience, noted on the committees page.',
+      'High school and university students are welcome across both the business summit and Model UN tracks. No prior experience is required for most programming.',
   },
   {
-    question: 'Can I attend both the Business Summit and Model UN?',
+    question: 'When is the next event?',
     answer:
-      'You register for one primary track. MUN delegates are committed to committee sessions, but summit keynotes and the social events are open to everyone.',
+      'Dates for the next edition have not been announced yet. Register your interest and we will contact you as soon as details are confirmed.',
   },
   {
-    question: 'How much does registration cost?',
+    question: 'How do I register?',
     answer:
-      'Pricing is finalized closer to the event and published on the registration page. Need-based fee waivers are available — mention it in your registration and the team will follow up.',
+      'Use the registration page to sign up as a delegate, chair, attendee, volunteer, or speaker. It takes about three minutes.',
   },
   {
-    question: 'How are committees assigned?',
+    question: 'How much does it cost?',
     answer:
-      'Delegates rank three committee preferences during registration. Assignments are made in registration order, balanced by experience level, and released through the participant portal.',
+      'Pricing is announced with each edition. Need-based fee waivers have been available in past seasons — mention it during registration and the team will follow up.',
   },
   {
-    question: 'When are position papers due?',
+    question: 'What about dietary restrictions or accessibility needs?',
     answer:
-      'Two weeks before the conference, submitted through the participant portal. Papers are required for award eligibility.',
-  },
-  {
-    question: 'Is there a dress code?',
-    answer:
-      'Western business attire for committee sessions and the case competition final. Smart casual is fine for workshops and social events.',
-  },
-  {
-    question: 'Do I need a team for the case competition?',
-    answer:
-      'Teams of three to five can register together, or you can register solo and get matched with a team at the opening mixer.',
-  },
-  {
-    question: 'What if I have dietary restrictions or accessibility needs?',
-    answer:
-      'Both are collected during registration. The venue is wheelchair accessible, and catering covers vegetarian, vegan, halal, and gluten-free options.',
+      'Both are collected during registration and go directly to the operations team. You can also contact us any time with specific questions.',
   },
 ]

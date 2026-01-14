@@ -11,7 +11,7 @@ export default function Faq() {
       <PageHeader
         eyebrow="Help"
         title="Frequently asked questions"
-        description="Everything delegates, attendees, and parents ask us most."
+        description="The questions delegates, attendees, and parents ask us most."
       />
 
       <section className="py-16 sm:py-24">

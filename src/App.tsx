@@ -6,39 +6,23 @@ import PageLoader from './components/ui/PageLoader'
 import Home from './pages/Home'
 
 const About = lazy(() => import('./pages/About'))
-const Summit = lazy(() => import('./pages/Summit'))
-const Mun = lazy(() => import('./pages/Mun'))
-const Speakers = lazy(() => import('./pages/Speakers'))
-const Committees = lazy(() => import('./pages/Committees'))
-const Schedule = lazy(() => import('./pages/Schedule'))
-const Sponsors = lazy(() => import('./pages/Sponsors'))
+const Events = lazy(() => import('./pages/Events'))
 const Faq = lazy(() => import('./pages/Faq'))
 const Contact = lazy(() => import('./pages/Contact'))
 const Register = lazy(() => import('./pages/Register'))
 const Portal = lazy(() => import('./pages/Portal'))
 const Organizer = lazy(() => import('./pages/Organizer'))
-const Team = lazy(() => import('./pages/Team'))
-const Venue = lazy(() => import('./pages/Venue'))
-const Gallery = lazy(() => import('./pages/Gallery'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 const routes = [
   { path: '/', element: <Home /> },
   { path: '/about', element: <About /> },
-  { path: '/summit', element: <Summit /> },
-  { path: '/mun', element: <Mun /> },
-  { path: '/speakers', element: <Speakers /> },
-  { path: '/committees', element: <Committees /> },
-  { path: '/schedule', element: <Schedule /> },
-  { path: '/sponsors', element: <Sponsors /> },
+  { path: '/events', element: <Events /> },
   { path: '/faq', element: <Faq /> },
   { path: '/contact', element: <Contact /> },
   { path: '/register', element: <Register /> },
   { path: '/portal', element: <Portal /> },
   { path: '/organizer', element: <Organizer /> },
-  { path: '/team', element: <Team /> },
-  { path: '/venue', element: <Venue /> },
-  { path: '/gallery', element: <Gallery /> },
   { path: '*', element: <NotFound /> },
 ]
 
