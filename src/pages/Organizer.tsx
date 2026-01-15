@@ -29,7 +29,7 @@ const roleTones: Record<Role, 'navy' | 'gold' | 'green' | 'slate'> = {
 }
 
 function exportCsv(rows: ReturnType<typeof getRegistrations>) {
-  const header = ['ID', 'Name', 'Email', 'Role', 'Organization', 'Level', 'Preferences', 'Registered']
+  const header = ['ID', 'Name', 'Email', 'Role', 'Organization', 'Level', 'Registered']
   const lines = rows.map((r) =>
     [
       r.id,
@@ -38,7 +38,6 @@ function exportCsv(rows: ReturnType<typeof getRegistrations>) {
       roleLabels[r.role],
       r.organization,
       r.educationLevel,
-      r.committeePreferences?.join(' | ') ?? '',
       new Date(r.createdAt).toLocaleDateString(),
     ]
       .map((cell) => `"${String(cell).replaceAll('"', '""')}"`)
@@ -86,7 +85,7 @@ export default function Organizer() {
       <PageHeader
         eyebrow="Internal"
         title="Organizer dashboard"
-        description="Review registrations, publish announcements, and export participant data. Demo build — seeded with sample data."
+        description="Review registrations, publish announcements, and export participant data."
       />
 
       <section className="py-16">
@@ -148,7 +147,6 @@ export default function Organizer() {
                       <th scope="col" className="py-2 pr-4">Participant</th>
                       <th scope="col" className="py-2 pr-4">Role</th>
                       <th scope="col" className="py-2 pr-4">Organization</th>
-                      <th scope="col" className="py-2 pr-4">Preferences</th>
                       <th scope="col" className="py-2">Registered</th>
                     </tr>
                   </thead>
@@ -165,9 +163,6 @@ export default function Organizer() {
                           <Badge tone={roleTones[r.role]}>{roleLabels[r.role]}</Badge>
                         </td>
                         <td className="py-3 pr-4 text-slate-600">{r.organization}</td>
-                        <td className="py-3 pr-4 text-xs text-slate-500">
-                          {r.committeePreferences?.join(', ') ?? '—'}
-                        </td>
                         <td className="py-3 text-slate-600">
                           {new Date(r.createdAt).toLocaleDateString()}
                         </td>

@@ -7,29 +7,26 @@ import Container from '../components/ui/Container'
 import Card from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
 import { TextField, SelectField, TextareaField, CheckboxField } from '../components/forms/fields'
-import { committees } from '../data/committees'
 import { saveRegistration, type RegistrationRecord, type Role } from '../lib/storage'
 import { registrationSchema, type RegistrationForm } from '../lib/registrationSchema'
 import { usePageTitle } from '../hooks/usePageTitle'
 
 const roles: { value: Role; title: string; description: string }[] = [
-  { value: 'delegate', title: 'MUN Delegate', description: 'Debate in one of six committees across the weekend.' },
+  { value: 'delegate', title: 'MUN Delegate', description: 'Debate and diplomacy in committee sessions.' },
   { value: 'chair', title: 'Committee Chair', description: 'Apply to chair a committee and lead debate.' },
-  { value: 'attendee', title: 'Summit Attendee', description: 'Keynotes, workshops, panels, and the case competition.' },
-  { value: 'volunteer', title: 'Volunteer', description: 'Join the operations team behind the event.' },
-  { value: 'speaker', title: 'Speaker / Judge', description: 'Host a session or judge the case competition.' },
+  { value: 'attendee', title: 'Summit Attendee', description: 'Keynotes, workshops, panels, and competitions.' },
+  { value: 'volunteer', title: 'Volunteer', description: 'Join the operations team behind the events.' },
+  { value: 'speaker', title: 'Speaker / Judge', description: 'Host a session or judge a competition.' },
 ]
 
 const stepFields: (keyof RegistrationForm)[][] = [
   ['role'],
   ['fullName', 'email', 'phone', 'organization', 'educationLevel'],
-  ['pref1', 'pref2', 'pref3', 'experience', 'caseCompetition', 'teamName', 'availability', 'sessionTopic'],
+  ['experience', 'availability', 'sessionTopic'],
   ['dietary', 'accessibility', 'agree'],
 ]
 
 const stepLabels = ['Role', 'About you', 'Details', 'Review']
-
-const committeeOptions = committees.map((c) => ({ value: c.abbreviation, label: `${c.abbreviation} — ${c.topic}` }))
 
 const educationOptions = [
   { value: 'High school', label: 'High school' },
@@ -39,16 +36,16 @@ const educationOptions = [
 ]
 
 const experienceOptions = [
-  { value: 'First conference', label: 'This is my first conference' },
+  { value: 'First conference', label: 'This would be my first conference' },
   { value: '1–2 conferences', label: '1–2 conferences' },
   { value: '3–5 conferences', label: '3–5 conferences' },
   { value: '6+ conferences', label: '6+ conferences' },
 ]
 
 const availabilityOptions = [
-  { value: 'Day 1 only', label: 'Day 1 only (Saturday)' },
-  { value: 'Day 2 only', label: 'Day 2 only (Sunday)' },
-  { value: 'Both days', label: 'Both days' },
+  { value: 'Flexible', label: 'Flexible' },
+  { value: 'Weekends only', label: 'Weekends only' },
+  { value: 'Limited', label: 'Limited availability' },
 ]
 
 export default function Register() {
@@ -61,11 +58,10 @@ export default function Register() {
     handleSubmit,
     trigger,
     watch,
-    setValue,
     formState: { errors, isSubmitting },
   } = useForm<RegistrationForm>({
     resolver: zodResolver(registrationSchema),
-    defaultValues: { caseCompetition: false, agree: false },
+    defaultValues: { agree: false },
     mode: 'onTouched',
   })
 
@@ -80,8 +76,7 @@ export default function Register() {
   const back = () => setStep((s) => Math.max(0, s - 1))
 
   const onSubmit = async (data: RegistrationForm) => {
-    // Demo build: registrations are stored locally in the browser.
-    await new Promise((r) => setTimeout(r, 600))
+    await new Promise((r) => setTimeout(r, 400))
     const record = saveRegistration({
       role: data.role,
       fullName: data.fullName,
@@ -89,15 +84,7 @@ export default function Register() {
       phone: data.phone || undefined,
       organization: data.organization,
       educationLevel: data.educationLevel,
-      committeePreferences:
-        data.role === 'delegate'
-          ? [data.pref1!, data.pref2!, data.pref3!]
-          : data.role === 'chair'
-            ? [data.pref1!]
-            : undefined,
       experience: data.experience || undefined,
-      caseCompetition: data.role === 'attendee' ? data.caseCompetition : undefined,
-      teamName: data.teamName || undefined,
       availability: data.availability || undefined,
       sessionTopic: data.sessionTopic || undefined,
       dietary: data.dietary || undefined,
@@ -120,16 +107,13 @@ export default function Register() {
                 {confirmation.id}
               </p>
               <p className="mt-4 text-slate-600">
-                Thanks, {confirmation.fullName.split(' ')[0]}! Save this ID — you'll use
-                it (or your email) to access the{' '}
+                Thanks, {confirmation.fullName.split(' ')[0]}! Save this ID — you can
+                use it (or your email) in the{' '}
                 <Link to="/portal" className="font-semibold text-gold-600 hover:text-gold-500">
                   participant portal
-                </Link>
-                , where committee assignments, announcements, and documents will appear.
-              </p>
-              <p className="mt-4 rounded-lg bg-navy-50 p-3 text-xs text-slate-500">
-                Demo build: this registration is stored locally in your browser and is
-                not an official Expedition registration.
+                </Link>{' '}
+                to check your status and see announcements. We'll reach out when the
+                next edition is confirmed.
               </p>
             </Card>
           </Container>
@@ -142,7 +126,7 @@ export default function Register() {
     <>
       <PageHeader
         eyebrow="Join us"
-        title="Register for Expedition 2027"
+        title="Register with Expedition"
         description="One form for delegates, chairs, attendees, volunteers, and speakers — about three minutes."
       />
 
@@ -171,7 +155,7 @@ export default function Register() {
               {step === 0 && (
                 <fieldset>
                   <legend className="font-display text-xl font-bold text-navy-900">
-                    How are you joining us?
+                    How would you like to join?
                   </legend>
                   <div className="mt-4 space-y-3">
                     {roles.map((r) => (
@@ -254,80 +238,31 @@ export default function Register() {
                   </h2>
 
                   {role === 'delegate' && (
-                    <>
-                      <SelectField
-                        id="pref1"
-                        label="First committee preference"
-                        placeholder="Select a committee"
-                        options={committeeOptions}
-                        registration={register('pref1')}
-                        error={errors.pref1?.message}
-                      />
-                      <SelectField
-                        id="pref2"
-                        label="Second committee preference"
-                        placeholder="Select a committee"
-                        options={committeeOptions}
-                        registration={register('pref2')}
-                        error={errors.pref2?.message}
-                      />
-                      <SelectField
-                        id="pref3"
-                        label="Third committee preference"
-                        placeholder="Select a committee"
-                        options={committeeOptions}
-                        registration={register('pref3')}
-                        error={errors.pref3?.message}
-                      />
-                      <SelectField
-                        id="experience"
-                        label="MUN experience"
-                        placeholder="Select your experience"
-                        options={experienceOptions}
-                        registration={register('experience')}
-                        error={errors.experience?.message}
-                      />
-                    </>
+                    <SelectField
+                      id="experience"
+                      label="MUN experience"
+                      placeholder="Select your experience"
+                      options={experienceOptions}
+                      registration={register('experience')}
+                      error={errors.experience?.message}
+                    />
                   )}
 
                   {role === 'chair' && (
-                    <>
-                      <SelectField
-                        id="pref1"
-                        label="Committee you'd like to chair"
-                        placeholder="Select a committee"
-                        options={committeeOptions}
-                        registration={register('pref1')}
-                        error={errors.pref1?.message}
-                      />
-                      <TextareaField
-                        id="experience"
-                        label="Chairing experience"
-                        hint="Conferences chaired, committees run, crisis experience — a few sentences is plenty."
-                        registration={register('experience')}
-                        error={errors.experience?.message}
-                      />
-                    </>
+                    <TextareaField
+                      id="experience"
+                      label="Chairing experience"
+                      hint="Conferences chaired, committees run, topics you'd like to lead — a few sentences is plenty."
+                      registration={register('experience')}
+                      error={errors.experience?.message}
+                    />
                   )}
 
                   {role === 'attendee' && (
-                    <>
-                      <CheckboxField
-                        id="caseCompetition"
-                        label="I want to compete in the case competition"
-                        registration={register('caseCompetition')}
-                        error={errors.caseCompetition?.message}
-                      />
-                      {values.caseCompetition && (
-                        <TextField
-                          id="teamName"
-                          label="Team name (optional)"
-                          hint="Leave blank to be matched with a team at the opening mixer."
-                          registration={register('teamName')}
-                          error={errors.teamName?.message}
-                        />
-                      )}
-                    </>
+                    <p className="rounded-xl bg-navy-50 p-4 text-sm text-slate-600">
+                      Nothing else needed — we'll send summit programming details to
+                      your email once the next edition is announced.
+                    </p>
                   )}
 
                   {role === 'volunteer' && (
@@ -394,12 +329,7 @@ export default function Register() {
                   />
                   <CheckboxField
                     id="agree"
-                    label={
-                      <>
-                        I agree to the participation policy and code of conduct, and I
-                        understand this demo registration is stored locally in my browser.
-                      </>
-                    }
+                    label="I agree to the participation policy and code of conduct."
                     registration={register('agree')}
                     error={errors.agree?.message}
                   />
@@ -415,15 +345,7 @@ export default function Register() {
                   <span />
                 )}
                 {step < stepLabels.length - 1 ? (
-                  <Button
-                    type="button"
-                    onClick={() => {
-                      if (step === 0 && !role) {
-                        setValue('role', undefined as never, { shouldValidate: true })
-                      }
-                      void next()
-                    }}
-                  >
+                  <Button type="button" onClick={() => void next()}>
                     Continue
                   </Button>
                 ) : (
