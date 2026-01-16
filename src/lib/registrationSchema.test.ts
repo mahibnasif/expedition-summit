@@ -7,9 +7,6 @@ const validDelegate: RegistrationForm = {
   email: 'delegate@example.com',
   organization: 'Test High School',
   educationLevel: 'High school',
-  pref1: 'UNSC',
-  pref2: 'WHO',
-  pref3: 'ECOSOC',
   experience: '1–2 conferences',
   agree: true,
 }
@@ -29,29 +26,18 @@ describe('registrationSchema', () => {
     expect(errorPaths({ ...validDelegate, email: 'not-an-email' })).toContain('email')
   })
 
-  it('rejects a delegate with missing committee preferences', () => {
-    const paths = errorPaths({ ...validDelegate, pref2: undefined, pref3: undefined })
-    expect(paths).toContain('pref2')
-    expect(paths).toContain('pref3')
-  })
-
-  it('rejects duplicate committee preferences', () => {
-    expect(errorPaths({ ...validDelegate, pref2: 'UNSC' })).toContain('pref3')
+  it('rejects a delegate without an experience level', () => {
+    expect(errorPaths({ ...validDelegate, experience: undefined })).toContain('experience')
   })
 
   it('rejects an unaccepted participation policy', () => {
     expect(errorPaths({ ...validDelegate, agree: false })).toContain('agree')
   })
 
-  it('requires chairs to pick a committee and describe experience', () => {
-    const paths = errorPaths({
-      ...validDelegate,
-      role: 'chair',
-      pref1: undefined,
-      experience: undefined,
-    })
-    expect(paths).toContain('pref1')
-    expect(paths).toContain('experience')
+  it('requires chairs to describe their experience', () => {
+    expect(
+      errorPaths({ ...validDelegate, role: 'chair', experience: undefined }),
+    ).toContain('experience')
   })
 
   it('requires volunteers to state availability', () => {
@@ -62,13 +48,10 @@ describe('registrationSchema', () => {
     expect(errorPaths({ ...validDelegate, role: 'speaker' })).toContain('sessionTopic')
   })
 
-  it('does not require committee preferences for attendees', () => {
+  it('does not require extra details for attendees', () => {
     const attendee = {
       ...validDelegate,
       role: 'attendee' as const,
-      pref1: undefined,
-      pref2: undefined,
-      pref3: undefined,
       experience: undefined,
     }
     expect(registrationSchema.safeParse(attendee).success).toBe(true)

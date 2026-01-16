@@ -2,12 +2,9 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import {
   findRegistration,
   getAnnouncements,
-  getPositionPaper,
   getRegistrations,
   publishAnnouncement,
   saveRegistration,
-  seedRegistrations,
-  submitPositionPaper,
 } from './storage'
 
 const baseRegistration = {
@@ -16,7 +13,7 @@ const baseRegistration = {
   email: 'test@example.com',
   organization: 'Test High School',
   educationLevel: 'High school',
-  committeePreferences: ['UNSC', 'WHO', 'ECOSOC'],
+  experience: '1–2 conferences',
 }
 
 beforeEach(() => {
@@ -26,15 +23,17 @@ beforeEach(() => {
 describe('saveRegistration', () => {
   it('returns a record with a generated id and timestamp', () => {
     const record = saveRegistration(baseRegistration)
-    expect(record.id).toMatch(/^EXP-2027-[A-Z0-9]{4}$/)
+    expect(record.id).toMatch(/^EXP-[A-Z0-9]{6}$/)
     expect(new Date(record.createdAt).getTime()).not.toBeNaN()
   })
 
-  it('persists the record alongside seed data', () => {
+  it('persists the record', () => {
     const record = saveRegistration(baseRegistration)
-    const all = getRegistrations()
-    expect(all).toHaveLength(seedRegistrations.length + 1)
-    expect(all.map((r) => r.id)).toContain(record.id)
+    expect(getRegistrations().map((r) => r.id)).toContain(record.id)
+  })
+
+  it('starts with no registrations', () => {
+    expect(getRegistrations()).toHaveLength(0)
   })
 })
 
@@ -49,38 +48,22 @@ describe('findRegistration', () => {
     expect(findRegistration('TEST@EXAMPLE.COM')?.fullName).toBe('Test Delegate')
   })
 
-  it('finds the seeded demo registration', () => {
-    expect(findRegistration('EXP-2027-DEMO')?.fullName).toBe('Alex Demo')
-  })
-
   it('returns undefined for unknown queries', () => {
-    expect(findRegistration('EXP-0000-NOPE')).toBeUndefined()
+    expect(findRegistration('EXP-NOPE')).toBeUndefined()
   })
 })
 
 describe('announcements', () => {
-  it('includes published announcements sorted newest first', () => {
-    publishAnnouncement('Test title', 'Test body')
+  it('starts empty', () => {
+    expect(getAnnouncements()).toHaveLength(0)
+  })
+
+  it('returns published announcements newest first', () => {
+    publishAnnouncement('First', 'Body one')
+    publishAnnouncement('Second', 'Body two')
     const all = getAnnouncements()
-    expect(all[0].title).toBe('Test title')
+    expect(all).toHaveLength(2)
     const dates = all.map((a) => a.publishedAt)
     expect(dates).toEqual([...dates].sort().reverse())
-  })
-})
-
-describe('position papers', () => {
-  it('stores and retrieves a paper by registration id', () => {
-    submitPositionPaper('EXP-2027-DEMO', 'UNSC', 'My position paper text.')
-    expect(getPositionPaper('EXP-2027-DEMO')?.committee).toBe('UNSC')
-  })
-
-  it('replaces an existing paper for the same registration', () => {
-    submitPositionPaper('EXP-2027-DEMO', 'UNSC', 'First draft')
-    submitPositionPaper('EXP-2027-DEMO', 'UNSC', 'Final draft')
-    expect(getPositionPaper('EXP-2027-DEMO')?.content).toBe('Final draft')
-  })
-
-  it('returns undefined when no paper was submitted', () => {
-    expect(getPositionPaper('EXP-2027-XXXX')).toBeUndefined()
   })
 })
